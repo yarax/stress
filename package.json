@@ -1,0 +1,17 @@
+ {
+  "name": "stress",
+  "version": "0.1.0",
+  "private": false,
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "request" : "*",
+    "async": "*",
+    "tough-cookie-filestore" : "*",
+    "tough-cookie" : "*",
+    "progress" : "*",
+    "express" : "*",
+    "socket.io" : "*"
+  }
+}

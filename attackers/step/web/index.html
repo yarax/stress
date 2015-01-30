@@ -1,0 +1,47 @@
+<html>
+<body>
+
+<div id="curve_chart"></div>
+
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript"
+        src="https://www.google.com/jsapi?autoload={
+            'modules':[{
+              'name':'visualization',
+              'version':'1',
+              'packages':['corechart']
+            }]
+          }"></script>
+
+<script type="text/javascript">
+
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Year', 'Sales', 'Expenses'],
+            ['2004',  1000,      400],
+            ['2005',  1170,      460],
+            ['2006',  660,       1120],
+            ['2007',  1030,      540]
+        ]);
+
+        var options = {
+            title: 'Company Performance',
+            curveType: 'function',
+            legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        var socket = io();
+        socket.on('data', function(msg){
+            chart.draw(data, options);
+        });
+
+
+    }
+</script>
+
+</html>
