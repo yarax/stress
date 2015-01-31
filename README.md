@@ -1,7 +1,8 @@
 Stress
 ========
 
-Stress is a customized load testing tool, based on Node.js and [Request](https://github.com/request/request) library
+Stress is a customing load testing tool, based on Node.js and [Request](https://github.com/request/request) library
+
 Uses all CPUs to make latency more realistic on high loads
 
 #### Usage
@@ -25,7 +26,7 @@ Any new attackers can be added, using the existing interface.
 
 ./configs/default.json:
 
-``` json
+``` javascript
 {
 "cookieStore" : "./cookie.txt",
 "fullLog" : "./reports/full.txt",
@@ -51,14 +52,15 @@ Any new attackers can be added, using the existing interface.
     }
 ]
 } 
-``` json
+```
+
 
 #### Step attacker
 
 Step is a default attacker for stress. It allows to request urls using rps in ascendant order.
 Configuration:
 
-``` json
+``` javascript
 "attack" : {
             "type" : "step",
             "from" : 1, // start from requests in duration
@@ -66,7 +68,22 @@ Configuration:
             "step" : 1, // step requests
             "dur" : 500 // duration for current number of requests
         }
-``` json
+```
+
+
+###### Browser reports
+
+Step can display reports online in browser throw websockets.
+To use it set key "webReport" in config as true, and then follow the link in your console.
+Stress starts to request after browser connection
+
+
+
+
+
+
+
+
 
 
 
