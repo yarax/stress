@@ -11,6 +11,12 @@ Uses all CPUs to make latency more realistic on high loads
 npm i stress
 npm start
 ```
+
+In case of problems with Ubuntu
+``` bash
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+```
+
 #### Configuration and tasks
 
 Tasks for stress located in ./configs directory
