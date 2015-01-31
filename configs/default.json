@@ -1,0 +1,25 @@
+{
+"cookieStore" : "./cookie.txt",
+"fullLog" : "./reports/full.txt",
+"aggregateLog" : "./reports/report.txt",
+"webReport" : true,
+"tasks" : 
+[
+    {
+        "request" : {
+            "method" : "GET",
+            "url" : "http://www.google.com",
+            "headers" : {
+                "Content-type" : "text/html"
+            }
+        },
+        "attack" : {
+            "type" : "step",
+            "from" : 1,
+            "to" : 10,
+            "step" : 1,
+            "dur" : 500
+        }
+    }
+]
+} 

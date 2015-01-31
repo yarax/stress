@@ -17,27 +17,48 @@
 <script type="text/javascript">
 
     google.setOnLoadCallback(drawChart);
+    var socket = io();
 
     function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['Year', 'Sales', 'Expenses'],
-            ['2004',  1000,      400],
-            ['2005',  1170,      460],
-            ['2006',  660,       1120],
-            ['2007',  1030,      540]
-        ]);
 
         var options = {
-            title: 'Company Performance',
-            curveType: 'function',
+            title: 'loaded performance',
+            curveType: 'none',
             legend: { position: 'bottom' }
         };
+        
+        var result = null;
+        var container = document.getElementById('curve_chart');
+        var chart = new google.visualization.LineChart(container);
 
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+        socket.on('connect', function (socket) {
+            console.log("Connected");
+            result = null;
+            container.innerHTML = '';
+            chart = new google.visualization.LineChart(container);
 
-        var socket = io();
+        });
+
         socket.on('data', function(msg){
-            chart.draw(data, options);
+
+            if (!result) {
+                headers = Object.keys(msg.aggregated);
+                headers.unshift("step");
+                result = [headers];
+            }
+
+            var item = [msg.step];
+
+            for (var i in msg.aggregated) {
+                item.push(parseInt(msg.aggregated[i]) || 0);
+            }
+
+            result.push(item);
+            var gData = google.visualization.arrayToDataTable(result);
+
+            // {sum: 1953, min: null, max: 0, num: 6}
+            //console.log(result);
+            chart.draw(gData, options);
         });
 
 

@@ -1,4 +1,8 @@
-var config = require("../../config.json");
+/**
+    Dispatcher
+    Sends tasks to workers, gets reports from them and proxy it to frontend
+*/
+
 var util = require("util");
 var fs = require("fs");
 var events = require("events");
@@ -62,11 +66,14 @@ Step.prototype.masterHandler = function (data) {
 
     if (Object.keys(data).length) this.summary.push(data);
 
-    console.log(this.summary);
+    //console.log(this.summary);
 
 	if (this.answers === this.workers.length) {
 	    var aggregated = this.attacker.reporter.logAggregate(this.summary);
-        this.attacker.frontend.emit("data", aggregated);
+        this.attacker.frontend.emit("data", {
+            aggregated: aggregated,
+            step : this.currentStep
+        });
 	    this.answers = 0;
 	    
 	    this.currentStep = this.currentStep + this.task.attack.step;

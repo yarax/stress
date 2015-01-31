@@ -1,5 +1,9 @@
+/**
+    Gets data from main thread as an array of workers results
+    Formand log  reports
+*/
+
 var fs = require("fs");
-var config = require("../../config.json");
 
 var Reporter = function () {
     this.delimiter = "\t";
@@ -26,18 +30,19 @@ Reporter.prototype.logAggregate = function (summary) {
     summary.forEach(function (item) {
         sum+=item.sum;
         num+=item.num;
-        if (max > item.max) max = item.max;
-        if (min < item.min) min = item.min;
+        if (item.max > max) max = item.max;
+        if (item.min < min) min = item.min;
 
     });
 
-    var avg = sum / num;
+    var avg = parseInt(sum / num);
 
-    var line = sum + this.delimiter + num + this.delimiter + avg + this.delimiter + max + this.delimiter + min + "\n";
+    var line = num + this.delimiter + avg + this.delimiter + max + this.delimiter + min + this.delimiter + sum + "\n";
 
     fs.appendFile(file, line, function () {});
 
-    return {sum :sum, min: min, max: max, num: num};
+    summary = [];
+    return {min: min, max: max, avg: avg};
 
 };
 
@@ -49,7 +54,7 @@ Reporter.prototype.fillHeaders = function () {
     fs.writeFileSync(file, line);
 
     file = config.aggregateLog;
-    line = "sum" + this.delimiter + "max" + this.delimiter + "min" + this.delimiter + "num" + "\n";
+    line =  "num" + this.delimiter + "avg" + this.delimiter + "max" + this.delimiter + "min" + this.delimiter + "sum\n";
 
     fs.writeFileSync(file, line);
 };
