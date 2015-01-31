@@ -5,10 +5,12 @@ Stress is a customing load testing tool, based on Node.js and [Request](https://
 
 Uses all CPUs to make latency more realistic on high loads
 
-#### Usage
+#### Install and usage
 
 ```
-npm i stress
+git clone https://github.com/yarax/stress.git
+cd stress
+npm i
 npm start
 ```
 
