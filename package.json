@@ -2,8 +2,9 @@
   "name": "stress",
   "version": "0.1.0",
   "private": false,
-  "scripts": {
-    "start": "node index.js"
+  "start": "stress",
+  "scripts" : {
+    "start" : "node lib/index.js"
   },
   "dependencies": {
     "request" : "*",
