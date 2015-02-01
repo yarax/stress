@@ -66,7 +66,7 @@ Step.prototype.masterHandler = function (data) {
 
     if (Object.keys(data).length) this.summary.push(data);
 
-    //console.log(this.summary);
+    //console.log(this.answers, this.workers.length);
 
 	if (this.answers === this.workers.length) {
 	    var aggregated = this.attacker.reporter.logAggregate(this.summary);

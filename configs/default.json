@@ -1,24 +1,28 @@
 {
 "cookieStore" : "./cookie.txt",
-"fullLog" : "./reports/full.txt",
+"fullLog" : "./reports/fullLog.txt",
 "aggregateLog" : "./reports/report.txt",
 "webReport" : true,
+"requestTimeout" : 5000,
 "tasks" : 
 [
     {
         "request" : {
             "method" : "GET",
-            "url" : "http://www.google.com",
+            "url" : "http://google.com",
             "headers" : {
-                "Content-type" : "text/html"
+                "Content-type" : "application/json"
+            },
+            "json" : {
+                "deviceId" : "81C4F8D9-C2BC-460B-BEEE-F14BF98D1E76"
             }
         },
         "attack" : {
             "type" : "step",
-            "from" : 1,
-            "to" : 10,
+            "from" : 2000,
+            "to" : 2000,
             "step" : 1,
-            "dur" : 500
+            "dur" : 1000
         }
     }
 ]

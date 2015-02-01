@@ -22,6 +22,7 @@ Reporter.prototype.logAll = function (data) {
 Reporter.prototype.logAggregate = function (summary) {
 
     var file = config.aggregateLog;
+    if (!file) return;
     var sum = 0;
     var max = 0;
     var min = Infinity;
@@ -49,14 +50,18 @@ Reporter.prototype.logAggregate = function (summary) {
 Reporter.prototype.fillHeaders = function () {
 
     var file = config.fullLog;
-    var line = "reqTime" + this.delimiter + "status" + this.delimiter + "body" + this.delimiter + "pid" + this.delimiter + "reqs" + this.delimiter + "url" + this.delimiter + "duration\n";
 
-    fs.writeFileSync(file, line);
+    if (file) {
+        var line = "reqTime" + this.delimiter + "status" + this.delimiter + "body" + this.delimiter + "pid" + this.delimiter + "reqs" + this.delimiter + "url" + this.delimiter + "duration\n";
+        fs.writeFileSync(file, line);
+    }
 
     file = config.aggregateLog;
-    line =  "num" + this.delimiter + "avg" + this.delimiter + "max" + this.delimiter + "min" + this.delimiter + "sum\n";
 
-    fs.writeFileSync(file, line);
+    if (file) {
+        line = "num" + this.delimiter + "avg" + this.delimiter + "max" + this.delimiter + "min" + this.delimiter + "sum\n";
+        fs.writeFileSync(file, line);
+    }
 };
 
 module.exports = new Reporter;
