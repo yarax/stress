@@ -25,12 +25,12 @@ Receiver.prototype.handle = function (cb, err, response, body) {
     if (time > this.report.max) this.report.max = time;
     if (time < this.report.min) this.report.min = time;
 
-    setTimeout(cb.bind(cb, {
+    cb({
         reqTime : time,
         status : response ? response.statusCode : "NO_RESPONSE",
         body: body
 
-    }), this.delay);
+    });
 
 };
 
