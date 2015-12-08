@@ -9,7 +9,7 @@
     {
         "request" : {
             "method" : "GET",
-            "url" : "http://google.com",
+            "url" : "http://ya.com",
             "headers" : {
                 "Content-type" : "application/json"
             },
@@ -19,10 +19,10 @@
         },
         "attack" : {
             "type" : "step",
-            "from" : 2000,
-            "to" : 2000,
+            "from" : 10,
+            "to" : 50,
             "step" : 1,
-            "dur" : 1000
+            "dur" : 10000
         }
     }
 ]

@@ -15,7 +15,7 @@ Receiver.prototype.resetReport = function () {
         max : 0,
         min : Infinity
     }
-}
+};
 
 Receiver.prototype.handle = function (cb, err, response, body) {
 

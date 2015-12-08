@@ -1,0 +1,68 @@
+<html>
+<body>
+
+<div id="curve_chart"></div>
+
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript"
+        src="https://www.google.com/jsapi?autoload={
+            'modules':[{
+              'name':'visualization',
+              'version':'1',
+              'packages':['corechart']
+            }]
+          }"></script>
+
+<script type="text/javascript">
+
+    google.setOnLoadCallback(drawChart);
+    var socket = io();
+
+    function drawChart() {
+
+        var options = {
+            title: 'loaded performance',
+            curveType: 'none',
+            legend: { position: 'bottom' }
+        };
+        
+        var result = null;
+        var container = document.getElementById('curve_chart');
+        var chart = new google.visualization.LineChart(container);
+
+        socket.on('connect', function (socket) {
+            console.log("Connected");
+            result = null;
+            container.innerHTML = '';
+            chart = new google.visualization.LineChart(container);
+
+        });
+
+        socket.on('data', function(msg){
+
+            if (!result) {
+                headers = Object.keys(msg.aggregated);
+                headers.unshift("step");
+                result = [headers];
+            }
+
+            var item = [msg.step];
+
+            for (var i in msg.aggregated) {
+                item.push(parseInt(msg.aggregated[i]) || 0);
+            }
+
+            result.push(item);
+            var gData = google.visualization.arrayToDataTable(result);
+
+            // {sum: 1953, min: null, max: 0, num: 6}
+            //console.log(result);
+            chart.draw(gData, options);
+        });
+
+
+    }
+</script>
+
+</html>

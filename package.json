@@ -13,6 +13,7 @@
     "tough-cookie" : "*",
     "progress" : "*",
     "express" : "*",
-    "socket.io" : "*"
+    "socket.io" : "*",
+    "nnb" : "0.0.3"
   }
 }
