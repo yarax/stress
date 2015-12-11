@@ -27,7 +27,7 @@ func req(i int) {
 
 
 func main() {
-    for i := 0; i < 800; i++ {
+    for i := 0; i < 200; i++ {
         go req(i)
     }
 

@@ -19,7 +19,7 @@ var Frontent = function () {
     });
 
     http.listen(PORT, function(){
-        console.log("\nListening frontend from: http://localhost:" + PORT + "\n\n");
+        console.log("\nGo to: http://localhost:" + PORT + "\n\n");
     });
 
     io.on('connection', function(socket){

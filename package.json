@@ -14,6 +14,6 @@
     "progress" : "*",
     "express" : "*",
     "socket.io" : "*",
-    "nnb" : "0.0.3"
+    "nnb" : "0.0.4"
   }
 }
