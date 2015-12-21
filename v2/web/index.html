@@ -19,10 +19,7 @@
 
     google.setOnLoadCallback(drawChart);
     var socket = io();
-    var results = {
-        "aggregate" : [['step', 'max', 'min', 'avg']],
-        "rps" : [['step', 'rps']]
-    };
+    var results;
     var charts = {};
     var options = {
         "aggregate" : {
@@ -37,6 +34,16 @@
         }
     };
 
+    function reset(containerName) {
+        var container = document.getElementById(containerName);
+        container.innerHTML = '';
+        results = {
+            "aggregate" : [['step', 'max', 'min', 'avg']],
+                "rps" : [['step', 'rps']]
+        };
+
+    }
+
     function init(containerName) {
         var container = document.getElementById(containerName);
         charts[containerName] = new google.visualization.LineChart(container);
@@ -47,6 +54,7 @@
     }
 
     function draw(containerName) {
+        console.log(results[containerName]);
         var gData = google.visualization.arrayToDataTable(results[containerName]);
         charts[containerName].draw(gData, options[containerName]);
     }
@@ -58,20 +66,22 @@
         socket.on('connect', function (socket) {
             console.log("Connected");
             result = null;
+            reset('aggregate');
+            reset('rps');
             init('aggregate');
             init('rps');
         });
 
+        socket.on('close', function (socket) {
+
+        });
+
         socket.on('data', function(msg){
-
-            var item = [msg.step];
-
-            for (var i in msg.aggregated) {
-                item.push(parseInt(msg.aggregated[i]) || 0);
-            }
+            
+            var item = [msg.aggregated.requests, msg.aggregated.max, msg.aggregated.min, msg.aggregated.avg, ];
 
             collectResult('aggregate', item);
-            collectResult('rps', [msg.step, msg.rps]);
+            collectResult('rps', [msg.requests, msg.rps]);
 
             draw('aggregate');
             draw('rps');

@@ -1,19 +1,23 @@
- {
+{
   "name": "stress",
   "version": "0.1.0",
   "private": false,
   "start": "stress",
-  "scripts" : {
-    "start" : "node lib/index.js"
+  "scripts": {
+    "start": "node lib/index.js"
   },
   "dependencies": {
-    "request" : "*",
     "async": "*",
-    "tough-cookie-filestore" : "*",
-    "tough-cookie" : "*",
-    "progress" : "*",
-    "express" : "*",
-    "socket.io" : "*",
-    "nnb" : "0.0.4"
+    "bacon": "0.0.1",
+    "baconjs": "^0.7.83",
+    "express": "*",
+    "kefir": "^3.2.0",
+    "nnb": "0.0.8",
+    "progress": "*",
+    "request": "*",
+    "rx": "^4.0.7",
+    "socket.io": "*",
+    "tough-cookie": "*",
+    "tough-cookie-filestore": "*"
   }
 }

@@ -9,7 +9,7 @@
     {
       "request": {
         "method": "GET",
-        "url": "http://irna-fish.ru/",
+        "url": "http://google.com",
         "headers": {
           "Content-type": "application/json"
         },

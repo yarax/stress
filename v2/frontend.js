@@ -10,6 +10,7 @@ var io = require('socket.io')(http);
 var connected = false;
 
 var PORT = 3008;
+var opened = false;
 
 var Frontent = function () {
     var self = this;
@@ -19,10 +20,12 @@ var Frontent = function () {
     });
 
     http.listen(PORT, function(){
+
         console.log("\nGo to: http://localhost:" + PORT + "\n\n");
     });
 
     io.on('connection', function(socket){
+        opened = true;
         if (connected) return;
         connected = true;
         self.emit("connected");
