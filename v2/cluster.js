@@ -5,7 +5,7 @@ var config = require('../configs/default.json');
 var Kefir = require('kefir');
 var mapreducer = require('./mapreduce');
 var conf = config.tasks[0].attack;
-var workersNum = 3;
+var workersNum = 2;
 var concStairs = [];
 var step = 0;
 var Nnb = require('nnb');
@@ -24,6 +24,7 @@ if (conf.type === 'step') {
     concStairs = new Array(stepsCount).fill(0).map(function (_, i) {
         return conf.from + conf.step * i;
     });
+    console.log('concStairs', concStairs);
 } else {
     console.log("Type %s is not supported", conf.type);
     process.exit();
@@ -42,8 +43,10 @@ if (cluster.isMaster) {
         console.log('Workers num: ', workers.length);
         mapreducer.mapProcesses(cluster, workers, requestsNumber, function (err, results) {
             console.log('Got results from all workers', results);
+            results.step = step;
             fe.emit('data', results);
             step++;
+            console.log("FENYA gonna run", requestsNumber, results.aggregated.requests, step, concStairs[step]);
             nextStep();
         });
     }
@@ -91,6 +94,7 @@ if (cluster.isMaster) {
                 url: config.tasks[0].request.url,
                 concurrency: num
             });
+            console.log('Launching nnb with', num);
             nnb.go(callback);
         };
         mapreducer.concurrencySeries(concurrency, instance, numforWorker, function (err, results) {

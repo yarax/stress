@@ -76,12 +76,12 @@
 
         });
 
-        socket.on('data', function(msg){
-            
-            var item = [msg.aggregated.requests, msg.aggregated.max, msg.aggregated.min, msg.aggregated.avg, ];
+        socket.on('data', function(msg) {
+            console.log(msg.aggregated.max);
+            var item = [msg.aggregated.requests, msg.aggregated.max, msg.aggregated.min, msg.aggregated.avg];
 
             collectResult('aggregate', item);
-            collectResult('rps', [msg.requests, msg.rps]);
+            collectResult('rps', [msg.aggregated.requests, msg.rps]);
 
             draw('aggregate');
             draw('rps');
