@@ -1,6 +1,7 @@
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
 var async = require('async');
+var logger = require('./logger');
 
 function MapReducer() {}
 
@@ -29,7 +30,6 @@ MapReducer.prototype.reduceRequests = function (results, startTime) {
     var rps = Math.round(results.length / (time / 1000));
     report.requests = results.length;
 
-    //console.log(results, report);
     return {
         rps: rps,
         aggregated: report
@@ -37,7 +37,7 @@ MapReducer.prototype.reduceRequests = function (results, startTime) {
 };
 
 MapReducer.prototype.reduceAggregated = function (results, startTime) {
-    console.log('RAX aggregating', results);
+    logger.debug('For reduce aggregated', results);
     var report = {};
     var max = results.reduce(function (prev, item) {
         if (item.aggregated.max > prev) return item.aggregated.max;
@@ -75,7 +75,7 @@ var startTime;
 // Last process gets +rest of requests (eg 10 = 3 + 3 + 4)
 MapReducer.prototype.mapProcesses = function (parent, instances, totalNum, callback) {
     var alLeastForEach = Math.floor(totalNum / instances.length);
-    console.log('Total to send', totalNum, 'alLeastForEach', alLeastForEach, 'instances.length', instances.length);
+    logger.debug('Map processes\ntotal to send', totalNum, 'alLeastForEach', alLeastForEach, 'instances.length', instances.length);
     var mod = totalNum % instances.length;
     var self = this;
     results = [];
@@ -88,7 +88,7 @@ MapReducer.prototype.mapProcesses = function (parent, instances, totalNum, callb
             result = JSON.parse(result);
             results.push(result);
             responds++;
-            console.log('CLUSTER', responds, instances.length);
+            logger.debug('Cluster got responds: ', responds, 'instances:' , instances.length);
             if (responds === instances.length) {
                 responds = 0;
                 callback(null, self.reduceAggregated(results, startTime));
@@ -99,34 +99,32 @@ MapReducer.prototype.mapProcesses = function (parent, instances, totalNum, callb
 
     instances.forEach(function (instance, i) {
         var num = ((i + 2) * alLeastForEach > totalNum) ? alLeastForEach + mod : alLeastForEach;
-        console.log('Sending ', num);
+        logger.debug('Sending for worker', num);
         instance.send(num);
     });
 };
-// For the rest requests it's created a new iteration (e.g 10 = 3 + 3 + 3 + 1)
+// For the rest requests it will create a new iteration (e.g 10 = 3 + 3 + 3 + 1)
 MapReducer.prototype.concurrencySeries = function (concurrency, instance, num, callback) {
-    console.log('GFI need to process', num, process.pid);
+    logger.debug('ConcurrencySeries need to process', num);
     var self = this;
     var alLeastForEach = Math.ceil(num / concurrency);
     var mod = num % concurrency;
     var results = [];
     var startTime = Date.now();
-    console.log('Cond series interaring throw', alLeastForEach, num, concurrency);
     async.forEachOfSeries(new Array(alLeastForEach).fill(0), function (_, i, next) {
         var num = i === alLeastForEach - 1 && mod  ? mod : concurrency; // +rest for the last one
-        console.log('GFI gonna send', process.pid, num, 'i: ', i);
+        logger.debug('ConcurrencySeries send for nnb', num, 'i: ', i);
         instance(num, function (err, result) {
-            console.log('GFI Got from instance', process.pid, result.length);
+            logger.debug('ConcurrencySeries got from nnb', result.length);
             if (err) return next(err);
             results = results.concat(result);
             next();
         });
     }, function (err) {
-        console.log('ITERATED', process.pid);
+        logger.debug('ConcurrencySeries iterated');
         if (err) {
             throw new Error(err);
         }
-        //console.log('Results before reduciong', results);
         callback(null, self.reduceRequests(results, startTime));
     });
 };

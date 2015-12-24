@@ -1,6 +1,6 @@
 {
   "name": "stress",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
   "start": "stress",
   "scripts": {
@@ -10,14 +10,17 @@
     "async": "*",
     "bacon": "0.0.1",
     "baconjs": "^0.7.83",
+    "config": "^1.17.1",
     "express": "*",
     "kefir": "^3.2.0",
-    "nnb": "0.0.8",
+    "nan": "^2.1.0",
+    "nnb": "1.0.1",
     "progress": "*",
     "request": "*",
     "rx": "^4.0.7",
     "socket.io": "*",
     "tough-cookie": "*",
-    "tough-cookie-filestore": "*"
+    "tough-cookie-filestore": "*",
+    "winston": "^2.1.1"
   }
 }

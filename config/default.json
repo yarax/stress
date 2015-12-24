@@ -3,7 +3,8 @@
   "fullLog": "./reports/fullLog.txt",
   "aggregateLog": "./reports/report.txt",
   "webReport": true,
-  "concurrency" : 200,
+  "workersNum": 1,
+  "concurrency": 200,
   "requestTimeout": 5000,
   "tasks": [
     {

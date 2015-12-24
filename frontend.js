@@ -8,6 +8,7 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var connected = false;
+var logger = require('./logger');
 
 var PORT = 3008;
 var opened = false;
@@ -21,7 +22,7 @@ var Frontent = function () {
 
     http.listen(PORT, function(){
 
-        console.log("\nGo to: http://localhost:" + PORT + "\n\n");
+        logger.info("Charts: http://localhost:" + PORT);
     });
 
     io.on('connection', function(socket){
