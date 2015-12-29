@@ -7,7 +7,7 @@ var logger = require('./logger');
 
 //logger.debug = logger.log;
 var mapreducer = require('./mapreduce');
-var conf = config.tasks[0].attack;
+var conf = config.task.attack;
 var workersNum = config.workersNum;
 var concStairs = [];
 var step = 0;
@@ -90,10 +90,9 @@ if (cluster.isMaster) {
         logger.debug("Hi, I'm a ", process.pid, 'got', msg);
         var numforWorker = parseInt(msg);
         var instance = function (num, callback) {
-            var nnb = new Nnb({
-                url: config.tasks[0].request.url,
-                concurrency: num
-            });
+            var options = config.task.request;
+            options.concurrency = num;
+            var nnb = new Nnb(options);
             logger.debug('Launching nnb with', num);
             nnb.go(callback);
         };

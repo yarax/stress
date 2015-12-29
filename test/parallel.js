@@ -1,4 +1,4 @@
-var mapreducer = require('../v2/mapreduce');
+var mapreducer = require('../mapreduce');
 var assert = require('assert');
 var EE = require('events').EventEmitter;
 var util = require('util');

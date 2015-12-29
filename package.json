@@ -4,7 +4,7 @@
   "private": false,
   "start": "stress",
   "scripts": {
-    "start": "node lib/index.js"
+    "start": "node cluster.js"
   },
   "dependencies": {
     "async": "*",
@@ -13,14 +13,13 @@
     "config": "^1.17.1",
     "express": "*",
     "kefir": "^3.2.0",
-    "nan": "^2.1.0",
-    "nnb": "1.0.1",
     "progress": "*",
     "request": "*",
     "rx": "^4.0.7",
     "socket.io": "*",
     "tough-cookie": "*",
     "tough-cookie-filestore": "*",
-    "winston": "^2.1.1"
+    "winston": "^2.1.1",
+    "nnb": "1.0.4"
   }
 }
