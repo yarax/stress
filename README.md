@@ -1,8 +1,9 @@
 Stress
 ========
 
-Simple Node.js tool fot stress testing HTTP services.
-Uses https://github.com/yarax/nnb with C++ POSIX threads for higher performance.
+Simple Node.js tool for stress testing HTTP services.
+
+Uses https://github.com/yarax/nnb with C++ POSIX threads for high performance.
 
 ### Install
 
@@ -15,8 +16,8 @@ There are can be some problems with building, then try to run `npm i` one more t
 
 ### Configuration
 
-Nnb uses [https://github.com/lorenwest/node-config] for configuration, so you can create your own config files.
-Default config file: config/default.json
+Stress uses https://github.com/lorenwest/node-config for configuration, so you can create your own config files.
+Default one is: config/default.json
 
 * workersNum - number of spawning processes (1 recommended)
 * concurrency - concurrency for nnb (depends on your ulimit -n value)
