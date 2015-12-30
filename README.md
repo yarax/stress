@@ -26,5 +26,5 @@ Default one is: config/default.json
 
 ### Platforms
 
-Tested with Node 0.10 - 4.2 Linux/Debian, OS X El Capitan
+Tested with Node 0.12 - 4.2 Linux/Debian, OS X El Capitan
 
