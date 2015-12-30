@@ -4,7 +4,7 @@ var async = require('async');
 var config = require('config');
 var Kefir = require('kefir');
 var logger = require('./logger');
-Array.prototype.fill = function (n) {var a = []; for (var i=0; i<this.length;i++) {a.push(n)} return a; };
+require('./helper');
 
 //logger.debug = logger.log;
 var mapreducer = require('./mapreduce');

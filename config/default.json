@@ -10,7 +10,7 @@
       "type": "step",
       "from": 10,
       "to": 500,
-      "step": 50,
+      "step": 10,
       "dur": 10000
     }
   }

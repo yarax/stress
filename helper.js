@@ -1,0 +1,1 @@
+Array.prototype.fill = function (n) {var a = []; for (var i=0; i<this.length;i++) {a.push(n)} return a; };

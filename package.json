@@ -20,6 +20,6 @@
     "tough-cookie": "*",
     "tough-cookie-filestore": "*",
     "winston": "^2.1.1",
-    "nnb": "1.0.4"
+    "nnb": "1.0.5"
   }
 }

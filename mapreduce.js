@@ -2,6 +2,7 @@ var EventEmitter = require('events').EventEmitter;
 var util = require('util');
 var async = require('async');
 var logger = require('./logger');
+require('./helper');
 
 function MapReducer() {}
 
