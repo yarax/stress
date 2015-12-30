@@ -2,7 +2,7 @@ var EventEmitter = require('events').EventEmitter;
 var util = require('util');
 var async = require('async');
 var logger = require('./logger');
-require('./helper');
+Array.prototype.fill = function (n) {var a = []; for (var i=0; i<this.length;i++) {a.push(n)} return a; };
 
 function MapReducer() {}
 
@@ -83,22 +83,21 @@ MapReducer.prototype.mapProcesses = function (parent, instances, totalNum, callb
     responds = 0;
     startTime = Date.now();
 
-    if (!parent.subscribed) {
-
-        parent.on('message', function (result) {
-            result = JSON.parse(result);
-            results.push(result);
-            responds++;
-            logger.debug('Cluster got responds: ', responds, 'instances:' , instances.length);
-            if (responds === instances.length) {
-                responds = 0;
-                callback(null, self.reduceAggregated(results, startTime));
-            }
-        });
-        parent.subscribed = true;
-    }
-
     instances.forEach(function (instance, i) {
+        if (!instance.subscribed) {
+            instance.on('message', function (result) {
+                result = JSON.parse(result);
+                results.push(result);
+                responds++;
+                logger.debug('Cluster got responds: ', responds, 'instances:', instances.length);
+                if (responds === instances.length) {
+                    responds = 0;
+                    callback(null, self.reduceAggregated(results, startTime));
+                }
+            });
+            instance.subscribed = true;
+        }
+
         var num = ((i + 2) * alLeastForEach > totalNum) ? alLeastForEach + mod : alLeastForEach;
         logger.debug('Sending for worker', num);
         instance.send(num);

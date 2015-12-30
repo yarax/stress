@@ -4,7 +4,7 @@ var async = require('async');
 var config = require('config');
 var Kefir = require('kefir');
 var logger = require('./logger');
-require('./helper');
+Array.prototype.fill = function (n) {var a = []; for (var i=0; i<this.length;i++) {a.push(n)} return a; };
 
 //logger.debug = logger.log;
 var mapreducer = require('./mapreduce');
@@ -46,6 +46,9 @@ if (cluster.isMaster) {
             logger.info('Done');
             process.exit();
         }
+        cluster.on('message', function () {
+            console.log(arguments);
+        });
         mapreducer.mapProcesses(cluster, workers, requestsNumber, function (err, results) {
             logger.debug('Got results from all workers', results);
             results.step = step;
@@ -98,6 +101,7 @@ if (cluster.isMaster) {
             nnb.go(callback);
         };
         mapreducer.concurrencySeries(concurrency, instance, numforWorker, function (err, results) {
+            logger.debug('concurrencySeries callback', results, 'sending to parent..');
             process.send(JSON.stringify(results));
         });
 

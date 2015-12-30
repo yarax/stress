@@ -3,7 +3,7 @@ var logger = new winston.Logger();
 var util = require('util');
 
 logger.add(winston.transports.Console, {
-    level: 'info',
+    level: 'debug',
     prettyPrint: true,
     colorize: true,
     silent: false,

@@ -24,4 +24,7 @@ Default one is: config/default.json
 * task.request - options for nnb. See more [https://github.com/yarax/nnb]
 * task.attack - configuration of the attack. Currently only `step` type supported.
 
+### Platforms
+
+Tested with Node 0.10 - 4.2 Linux/Debian, OS X El Capitan
 
